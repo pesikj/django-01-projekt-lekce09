@@ -4,7 +4,7 @@ import crm.models as models
 from django.urls import reverse_lazy
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from crm.forms import EmployeeForm, UserForm, CompanyForm, OpportunityFilterFormHelper
+from crm.forms import EmployeeForm, UserForm, CompanyForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext as _
 from crm.forms import OpportunityForm, RegisterUserForm
@@ -14,7 +14,7 @@ from django_tables2 import SingleTableView
 from django_tables2 import SingleTableMixin
 import crm.tables as tables
 from django_filters.views import FilterView
-from crm.filters import OpportunityFilter
+from crm.filters import OpportunityFilter, OpportunityFilterFormHelper
 
 class IndexView(TemplateView):
     template_name = "index.html"

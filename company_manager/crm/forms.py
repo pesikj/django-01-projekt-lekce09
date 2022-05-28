@@ -12,19 +12,6 @@ from crm.models import Employee, Company, Opportunity
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
 
-class OpportunityFilterFormHelper(FormHelper):
-    form_method = 'GET'
-    layout = Layout(
-            Div(
-                Div("company", css_class="col-sm-3"),
-                Div("sales_manager", css_class="col-sm-3"),
-                Div("status", css_class="col-sm-2"),
-                Submit('submit', 'Filter', css_class='button'),
-                css_class="row"
-            )
-        )
-
-
 class UserForm(ModelForm):
     class Meta:
         model = User
