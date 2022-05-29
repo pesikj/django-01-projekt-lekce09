@@ -9,3 +9,11 @@ class OpportunityTable(tables.Table):
     class Meta:
         model = Opportunity
         fields = ("company", "sales_manager", "status", "value", "updated_on")
+
+class CompanyTable(tables.Table):
+    name = tables.LinkColumn("company_update", args=[A("pk")],
+                                attrs={"a": {"class": "cell-with-link"}})
+
+    class Meta:
+        model = Opportunity
+        fields = ("name", "status", "phone_number", "identfication_number")
