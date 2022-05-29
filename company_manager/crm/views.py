@@ -14,7 +14,7 @@ from django_tables2 import SingleTableView
 from django_tables2 import SingleTableMixin
 import crm.tables as tables
 from django_filters.views import FilterView
-from crm.filters import OpportunityFilter, OpportunityFilterFormHelper
+from crm.filters import CompanyFilter, CompanyFilterFormHelper, OpportunityFilter, OpportunityFilterFormHelper
 
 class IndexView(TemplateView):
     template_name = "index.html"
@@ -37,13 +37,18 @@ class OpportunityCreateView(PermissionRequiredMixin, SuccessMessageMixin, Create
     success_url = reverse_lazy("index")
     success_message = "Opportunity created!"
 
+class CompanyUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = models.Company
+    template_name = "opportunity/update_company.html"
+    success_url = reverse_lazy("index")
+    success_message = "Company updated!"
+
 class OpportunityUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = models.Opportunity
     form_class = OpportunityForm
     template_name = "opportunity/update_opportunity.html"
     success_url = reverse_lazy("index")
     success_message = "Opportunity updated!"
-
 
 class EmployeeUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = "employee/update_employee.html"
@@ -78,4 +83,15 @@ class OpportunityListView(LoginRequiredMixin, SingleTableMixin, FilterView):
     def get_filterset(self, filterset_class):
         filterset = super().get_filterset(filterset_class)
         filterset.form.helper = OpportunityFilterFormHelper()
+        return filterset
+
+class CompanyListView(LoginRequiredMixin, SingleTableMixin, FilterView):
+    model = models.Company
+    table_class = tables.CompanyTable
+    template_name = "company/list_company.html"
+    filterset_class = CompanyFilter
+
+    def get_filterset(self, filterset_class):
+        filterset = super().get_filterset(filterset_class)
+        filterset.form.helper = CompanyFilterFormHelper()
         return filterset

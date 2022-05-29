@@ -1,5 +1,5 @@
 import django_filters
-from crm.models import Opportunity
+from crm.models import Company, Opportunity
 
 
 from crispy_forms.helper import FormHelper
@@ -23,3 +23,22 @@ class OpportunityFilter(django_filters.FilterSet):
     class Meta:
         model = Opportunity
         fields = ['company', 'sales_manager', "status"]
+
+class CompanyFilterFormHelper(FormHelper):
+    form_method = 'GET'
+    layout = Layout(
+            Div(
+                Div("status", css_class="col-sm-3"),
+                Div("name", css_class="col-sm-3"),
+                Div("identification_number", css_class="col-sm-2"),
+                Submit('submit', 'Filter', css_class='button'),
+                css_class="row"
+            )
+        )
+
+class CompanyFilter(django_filters.FilterSet):
+    name = django_filters.CharFilter(field_name ="name", lookup_expr='icontains')
+
+    class Meta:
+        model = Company
+        fields = ['status', 'name', "identification_number"]
